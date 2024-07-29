@@ -1,0 +1,51 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+    <h2 class="text-2xl font-bold mb-4">Order Form</h2>
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <div class="font-semibold">Product Name</div>
+      <div class="font-semibold">Quantity</div>
+    </div>
+    <div *ngFor="let row of rows; let index = index" class="grid grid-cols-2 gap-4 mb-4">
+      <ng-select
+        [items]="productOptions"
+        bindLabel="label"
+        bindValue="value"
+        [(ngModel)]="row.product"
+        placeholder="Choose Product"
+        (change)="handleProductChange(index, $event)"
+        class="bg-white p-2 rounded shadow"
+      ></ng-select>
+      <ng-select
+        [items]="quantityOptions"
+        bindLabel="label"
+        bindValue="value"
+        [(ngModel)]="row.quantity"
+        placeholder="Choose Quantity"
+        (change)="handleQuantityChange(index, $event)"
+        class="bg-white p-2 rounded shadow"
+      ></ng-select>
+    </div>
+    <div class="flex space-x-4 mb-4">
+      <button *ngIf="rows.length < 8" (click)="handleAddRow()" class="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600">
+        ADD
+      </button>
+      <button (click)="handleShowOrder()" class="bg-green-500 text-white px-4 py-2 rounded shadow hover:bg-green-600">
+        Show Order
+      </button>
+    </div>
+  
+    <div *ngIf="showOrder" class="mt-6 bg-white p-6 rounded shadow-lg">
+      <h3 class="text-xl font-bold mb-4">Your Order</h3>
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <div class="font-semibold">Product Name</div>
+        <div class="font-semibold">Quantity</div>
+      </div>
+      <div *ngFor="let row of rows" class="grid grid-cols-2 gap-4 mb-4">
+        <div>{{ row.product?.label }}</div>
+        <div>{{ row.quantity?.label }}</div>
+      </div>
+      <button (click)="handleTextToSpeech()" class="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 mt-4">
+        What is my Order?
+      </button>
+    </div>
+  </div>
+  
